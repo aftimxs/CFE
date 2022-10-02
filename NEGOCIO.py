@@ -19,17 +19,18 @@ import wx
 def NEGOCIO():
     #driver, actions, S_tarifa, S_anio, S_mes, S_estado, S_municipio, S_div
     # Accesar al driver y actions
-    PATH = "/Users/aftimxs/Downloads/chromedriver"
+    PATH = "C:\Program Files (x86)\chromedriver.exe"
     # C:\Program Files(x86)\chromedriver.exe
+    #/Users/aftimxs/Downloads/chromedriver
     driver = webdriver.Chrome(PATH)
     actions = ActionChains(driver)
 
-    S_tarifa = input('Tarifa: ').upper()
-    S_anio = input('Año: ').upper()
-    S_mes = input('Mes: ').upper()
-    S_estado = input('Estado: ').upper()
-    S_municipio = input('Municipio: ').upper()
-    S_div = input('Division: ').upper()
+    S_tarifa = 'TODAS' #input('Tarifa: ').upper()
+    S_anio = '2022' #input('Año: ').upper()
+    S_mes = 'TODOS' #input('Mes: ').upper()
+    S_estado = 'BAJA CALIFORNIA' #input('Estado: ').upper()
+    S_municipio = 'TIJUANA' #input('Municipio: ').upper()
+    S_div = 'BAJA CALIFORNIA' #input('Division: ').upper()
 
     if S_mes == 'TODOS':
         pass
@@ -40,8 +41,7 @@ def NEGOCIO():
 
     conn = sqlite3.connect('NEGOCIO.db')
     cur = conn.cursor()
-    #cur.execute("CREATE TABLE THN(tarifa, anio, verano, mes, consumo, precio, kwh, minimo)")
-    #cur.execute("CREATE TABLE THD(tarifa, anio, mes, region, cargo_fijo, verano, invierno, minimo)")
+    cur.execute("CREATE TABLE TNG(tarifa, estado, municipio, division, anio, mes, cargo, unidades, costo)")
 
     opciones_tarifas = driver.find_elements(By.XPATH, "//div[@id='ContentPlaceHolder1_pnlTarifasCRE']/div[2]/p/a")
 
@@ -81,7 +81,7 @@ def cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado
     titulo = 'tituloContenidoRojo'
 
     #Obtener nombre de la tarifa y minimo mensual de consumo
-    nombre_tarifa = driver.find_element(By.CLASS_NAME, titulo).text
+    nombre_tarifa = driver.find_element(By.CLASS_NAME, titulo).text.replace('Tarifa', '')
     mm = 25
 
     #Opciones de años
@@ -125,7 +125,7 @@ def Estado(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_mu
             # Obtener nombre del mes
             select_estado = Select(driver.find_element(By.ID, id_estado))
             e = select_estado.first_selected_option.text
-            Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, nombre_tarifa)
+            Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa)
 
     else:
         select_estado = Select(driver.find_element(By.ID, id_estado))
@@ -134,10 +134,10 @@ def Estado(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_mu
         # Obtener nombre del mes
         select_estado = Select(driver.find_element(By.ID, id_estado))
         e = select_estado.first_selected_option.text
-        Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, nombre_tarifa)
+        Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa)
 
 
-def Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, nombre_tarifa):
+def Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa):
     id_municipio = 'ContentPlaceHolder1_EdoMpoDiv_ddMunicipio'
     if S_municipio == 'TODOS':
         # Opciones de meses
@@ -151,7 +151,7 @@ def Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S
             # Obtener nombre del mes
             select_municipio = Select(driver.find_element(By.ID, id_municipio))
             mun = select_municipio.first_selected_option.text
-            Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, nombre_tarifa)
+            Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa)
 
     else:
         select_municipio = Select(driver.find_element(By.ID, id_municipio))
@@ -160,9 +160,9 @@ def Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S
         # Obtener nombre del mes
         select_municipio = Select(driver.find_element(By.ID, id_municipio))
         mun = select_municipio.first_selected_option.text
-        Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, nombre_tarifa)
+        Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa)
 
-def Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, nombre_tarifa):
+def Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa):
     id_div = 'ContentPlaceHolder1_EdoMpoDiv_ddDivision'
     if S_div == 'TODOS':
         # Opciones de meses
@@ -176,7 +176,7 @@ def Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_
             # Obtener nombre del mes
             select_div = Select(driver.find_element(By.ID, id_div))
             d = select_div.first_selected_option.text
-            cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa)
+            cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa)
 
     else:
         select_div = Select(driver.find_element(By.ID, id_div))
@@ -185,10 +185,10 @@ def Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_
         # Obtener nombre del mes
         select_div = Select(driver.find_element(By.ID, id_div))
         d = select_div.first_selected_option.text
-        cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa)
+        cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa)
 
 
-def cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa):
+def cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa):
     id_mes = 'ContentPlaceHolder1_Fecha2_ddMes'
     if S_mes == 'TODOS':
         # Opciones de meses
@@ -215,7 +215,7 @@ def cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado
 
 
 def tabla(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa):
-    table = driver.find_element(By.CLASS_NAME, 'table table-bordered table-striped')
+    table = driver.find_element(By.CSS_SELECTOR, '.table.table-bordered.table-striped')
     #Obtener las secciones que tienen los consumos
     rangos = table.find_elements(By.TAG_NAME, 'tr')
 
@@ -244,7 +244,7 @@ def tabla(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_mun
         #Mandar la entrada a una lista externa
         print(Table_dict)
         templist.append(Table_dict)
-        cur.executemany("INSERT INTO THN VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", [data])
+        cur.executemany("INSERT INTO TNG VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", [data])
         conn.commit()
 
     #Hacer el file con la info
