@@ -1,9 +1,10 @@
-import functions
+import HOGAR
+import NEGOCIO
 
-#funciones = {
-#        "HOGAR": functions.HOGAR,
-#        "NEGOCIO": functions.NEGOCIO,
-#    }
+funciones = {
+        "HOGAR": HOGAR,
+        "NEGOCIO": NEGOCIO,
+    }
 
 D_meses = {
     'ENERO': 1,

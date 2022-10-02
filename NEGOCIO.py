@@ -16,22 +16,7 @@ import wx
 #import x
 
 
-def NEGOCIO():
-    #driver, actions, S_tarifa, S_anio, S_mes, S_estado, S_municipio, S_div
-    # Accesar al driver y actions
-    PATH = "C:\Program Files (x86)\chromedriver.exe"
-    # C:\Program Files(x86)\chromedriver.exe
-    #/Users/aftimxs/Downloads/chromedriver
-    driver = webdriver.Chrome(PATH)
-    actions = ActionChains(driver)
-
-    S_tarifa = 'TODAS' #input('Tarifa: ').upper()
-    S_anio = '2022' #input('Año: ').upper()
-    S_mes = 'TODOS' #input('Mes: ').upper()
-    S_estado = 'BAJA CALIFORNIA' #input('Estado: ').upper()
-    S_municipio = 'TIJUANA' #input('Municipio: ').upper()
-    S_div = 'BAJA CALIFORNIA' #input('Division: ').upper()
-
+def NEGOCIO(driver, actions, S_tarifa, S_anio, S_mes, S_estado, S_municipio, S_div):
     if S_mes == 'TODOS':
         pass
     else:
@@ -46,7 +31,6 @@ def NEGOCIO():
     opciones_tarifas = driver.find_elements(By.XPATH, "//div[@id='ContentPlaceHolder1_pnlTarifasCRE']/div[2]/p/a")
 
     templist = []
-    templist2 = []
 
     if S_tarifa == 'TODAS':
         for index, val in enumerate(opciones_tarifas):
@@ -54,7 +38,7 @@ def NEGOCIO():
                 opciones_tarifas = driver.find_elements(By.XPATH, "//div[@id='ContentPlaceHolder1_pnlTarifasCRE']/div[2]/p/a")
                 actions.move_to_element(opciones_tarifas[index]).perform()
                 opciones_tarifas[index].click()
-                cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div)
+                cuales_anios(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div)
 
                 driver.get('https://app.cfe.mx/Aplicaciones/CCFE/Tarifas/TarifasCRENegocio/Negocio.aspx')
                 WebDriverWait(driver, 20).until(
@@ -67,7 +51,7 @@ def NEGOCIO():
             opciones_tarifas = driver.find_element(By.PARTIAL_LINK_TEXT, S_tarifa)
             actions.move_to_element(opciones_tarifas).perform()
             opciones_tarifas.click()
-            cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div)
+            cuales_anios(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div)
 
             driver.get('https://app.cfe.mx/Aplicaciones/CCFE/Tarifas/TarifasCRENegocio/Negocio.aspx')
             WebDriverWait(driver, 20).until(
@@ -77,7 +61,7 @@ def NEGOCIO():
         conn.close()
 
 
-def cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div):
+def cuales_anios(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div):
     titulo = 'tituloContenidoRojo'
 
     #Obtener nombre de la tarifa y minimo mensual de consumo
@@ -98,7 +82,7 @@ def cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado
             #Obtener nombre del año
             select_year = Select(driver.find_element(By.ID, 'ContentPlaceHolder1_Fecha_ddAnio'))
             a = select_year.first_selected_option.text
-            Estado(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa)
+            Estado(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa)
     else:
         # Seleccionar año
         select_year = Select(driver.find_element(By.ID, 'ContentPlaceHolder1_Fecha_ddAnio'))
@@ -107,11 +91,11 @@ def cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado
         # Obtener nombre del año
         select_year = Select(driver.find_element(By.ID, 'ContentPlaceHolder1_Fecha_ddAnio'))
         a = select_year.first_selected_option.text
-        Estado(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa)
+        Estado(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa)
 
 
 
-def Estado(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa):
+def Estado(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa):
     id_estado = 'ContentPlaceHolder1_EdoMpoDiv_ddEstado'
     if S_estado == 'TODOS':
         # Opciones de meses
@@ -125,7 +109,7 @@ def Estado(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_mu
             # Obtener nombre del mes
             select_estado = Select(driver.find_element(By.ID, id_estado))
             e = select_estado.first_selected_option.text
-            Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa)
+            Municipio(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa)
 
     else:
         select_estado = Select(driver.find_element(By.ID, id_estado))
@@ -134,10 +118,10 @@ def Estado(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_mu
         # Obtener nombre del mes
         select_estado = Select(driver.find_element(By.ID, id_estado))
         e = select_estado.first_selected_option.text
-        Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa)
+        Municipio(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa)
 
 
-def Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa):
+def Municipio(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, nombre_tarifa):
     id_municipio = 'ContentPlaceHolder1_EdoMpoDiv_ddMunicipio'
     if S_municipio == 'TODOS':
         # Opciones de meses
@@ -151,7 +135,7 @@ def Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S
             # Obtener nombre del mes
             select_municipio = Select(driver.find_element(By.ID, id_municipio))
             mun = select_municipio.first_selected_option.text
-            Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa)
+            Division(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa)
 
     else:
         select_municipio = Select(driver.find_element(By.ID, id_municipio))
@@ -160,9 +144,9 @@ def Municipio(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S
         # Obtener nombre del mes
         select_municipio = Select(driver.find_element(By.ID, id_municipio))
         mun = select_municipio.first_selected_option.text
-        Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa)
+        Division(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa)
 
-def Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa):
+def Division(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, nombre_tarifa):
     id_div = 'ContentPlaceHolder1_EdoMpoDiv_ddDivision'
     if S_div == 'TODOS':
         # Opciones de meses
@@ -176,7 +160,7 @@ def Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_
             # Obtener nombre del mes
             select_div = Select(driver.find_element(By.ID, id_div))
             d = select_div.first_selected_option.text
-            cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa)
+            cuales_meses(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa)
 
     else:
         select_div = Select(driver.find_element(By.ID, id_div))
@@ -185,10 +169,10 @@ def Division(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_
         # Obtener nombre del mes
         select_div = Select(driver.find_element(By.ID, id_div))
         d = select_div.first_selected_option.text
-        cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa)
+        cuales_meses(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa)
 
 
-def cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa):
+def cuales_meses(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, e, mun, d, nombre_tarifa):
     id_mes = 'ContentPlaceHolder1_Fecha2_ddMes'
     if S_mes == 'TODOS':
         # Opciones de meses
@@ -202,7 +186,7 @@ def cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado
             # Obtener nombre del mes
             select_month = Select(driver.find_element(By.ID, id_mes))
             m = select_month.first_selected_option.text
-            tabla(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa)
+            tabla(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa)
 
     else:
         select_month = Select(driver.find_element(By.ID, id_mes))
@@ -211,10 +195,10 @@ def cuales_meses(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado
         # Obtener nombre del mes
         select_month = Select(driver.find_element(By.ID, id_mes))
         m = select_month.first_selected_option.text
-        tabla(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa)
+        tabla(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa)
 
 
-def tabla(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa):
+def tabla(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, m, e, mun, d, nombre_tarifa):
     table = driver.find_element(By.CSS_SELECTOR, '.table.table-bordered.table-striped')
     #Obtener las secciones que tienen los consumos
     rangos = table.find_elements(By.TAG_NAME, 'tr')
@@ -251,5 +235,3 @@ def tabla(driver, templist, templist2, S_anio, S_mes, cur, conn, S_estado, S_mun
     df = pd.DataFrame(templist)
     df.to_csv(f'{nombre_tarifa}.csv')
 
-
-NEGOCIO()

@@ -7,11 +7,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.action_chains import ActionChains
-import pandas as pd
-import sqlite3
-import NEGOCIO
 import const
-import functions
+import NEGOCIO
+import HOGAR
 import csv
 import time
 import wx
@@ -24,8 +22,8 @@ import wx
 
 def CFE():
     # Accesar al driver y actions
-    PATH = "/Users/aftimxs/Downloads/chromedriver"
-    #C:\Program Files(x86)\chromedriver.exe
+    PATH = "C:\Program Files (x86)\chromedriver.exe"
+    #/Users/aftimxs/Downloads/chromedriver
     driver = webdriver.Chrome(PATH)
     actions = ActionChains(driver)
 
@@ -34,17 +32,23 @@ def CFE():
     S_anio = input('Año: ').upper()
     S_mes = input('Mes: ').upper()
 
+    if S_servicio == 'NEGOCIO':
+        S_estado = input('Estado: ').upper()
+        S_municipio = input('Municipio: ').upper()
+        S_div = input('Division: ').upper()
+
+    else:
+        pass
+
     if S_mes == 'TODOS':
         pass
     else:
         S_mes = str(const.D_meses[S_mes])
 
-
-    for key, val in const.funciones.items():
-        if key == S_servicio:
-            val(driver, actions, S_servicio, S_tarifa, S_anio, S_mes)
-        else:
-            pass
+    if S_servicio == 'HOGAR':
+        HOGAR.HOGAR(driver, actions, S_servicio, S_tarifa, S_anio, S_mes)
+    else:
+        NEGOCIO.NEGOCIO(driver, actions, S_tarifa, S_anio, S_mes, S_estado, S_municipio, S_div)
 
 
 CFE()
