@@ -1,0 +1,7 @@
+,Tarifa,Anio,Mes,Region,Cargo fijo,Verano,Invierno,Minimo
+0,Tarifa DAC,2022,ENERO,BajaCalifornia,126.12,$6.104,$5.244,25
+1,Tarifa DAC,2022,ENERO,BajaCaliforniaSur,126.12,$6.650,$5.244,25
+2,Tarifa DAC,2022,ENERO,Central,126.12,$6.279,,25
+3,Tarifa DAC,2022,ENERO,Noroeste,126.12,$5.883,,25
+4,Tarifa DAC,2022,ENERO,NorteyNoreste,126.12,$5.733,,25
+5,Tarifa DAC,2022,ENERO,SuryPeninsular,126.12,$5.822,,25

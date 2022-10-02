@@ -1,0 +1,16 @@
+,Tarifa,Anio,Verano,Mes,Consumo,Precio,kwh,Minimo
+0,Tarifa 1,2022,,ENERO,Consumobasico,0.882,75,25
+1,Tarifa 1,2022,,ENERO,Consumointermedio,1.073,65,25
+2,Tarifa 1,2022,,ENERO,Consumoexcedente,3.134,,25
+3,Tarifa 1A,2022,FEBRERO,ENERO,Consumobasico,0.882,75,25
+4,Tarifa 1A,2022,FEBRERO,ENERO,Consumointermedio,1.073,75,25
+5,Tarifa 1A,2022,FEBRERO,ENERO,Consumoexcedente,3.134,,25
+6,Tarifa 1A,2022,MARZO,ENERO,Consumobasico,0.882,75,25
+7,Tarifa 1A,2022,MARZO,ENERO,Consumointermedio,1.073,75,25
+8,Tarifa 1A,2022,MARZO,ENERO,Consumoexcedente,3.134,,25
+9,Tarifa 1A,2022,ABRIL,ENERO,Consumobasico,0.882,75,25
+10,Tarifa 1A,2022,ABRIL,ENERO,Consumointermedio,1.073,75,25
+11,Tarifa 1A,2022,ABRIL,ENERO,Consumoexcedente,3.134,,25
+12,Tarifa 1A,2022,MAYO,ENERO,Consumobasico,0.882,75,25
+13,Tarifa 1A,2022,MAYO,ENERO,Consumointermedio,1.073,75,25
+14,Tarifa 1A,2022,MAYO,ENERO,Consumoexcedente,3.134,,25
