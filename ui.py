@@ -1,74 +1,162 @@
 from tkinter import *
+from tkinter import ttk
+import main
 
 root = Tk()
 root.title("Base de datos CFE")
-root.geometry('200x400')
+#root.geometry('200x400')
 
-HOGAR = IntVar()
-NEGOCIO = IntVar()
-INDUSTRIA = IntVar()
+frame_Serv = LabelFrame(root, text='SERVICIO', padx=15, pady=10)
+frame_Serv.grid(row=0, column=0, padx=10, pady=10)
 
-enero = IntVar()
-febrero = IntVar()
-marzo = IntVar()
-abril = IntVar()
-mayo = IntVar()
-junio = IntVar()
-julio = IntVar()
-agosto = IntVar()
-septiembre = IntVar()
-octubre = IntVar()
-noviembre = IntVar()
-diciembre = IntVar()
+frame_Year = LabelFrame(root, text='AÑO', padx=17, pady=10)
+frame_Year.grid(row=1, column=0, padx=10, pady=10)
 
-aa1 = IntVar()
-aa2 = IntVar()
-aa3 = IntVar()
-aa4 = IntVar()
+frame_Month = LabelFrame(root, text='MES', padx=17, pady=10)
+frame_Month.grid(row=1, column=1, padx=10, pady=10)
 
-T1 = IntVar()
-T1A = IntVar()
-T1B = IntVar()
-T1C = IntVar()
-T1D = IntVar()
-T1E = IntVar()
-T1F = IntVar()
-TDAC = IntVar()
+frame_tarifas = LabelFrame(root, text='TARIFA', padx=17, pady=10)
+frame_tarifas.grid(row=0, column=1, padx=10, pady=10)
 
-def tarifas_hogar():
-    th1 = Checkbutton(root, text='1', variable=T1).pack()
-    th2 = Checkbutton(root, text='1A', variable=T1A).pack()
-    th3 = Checkbutton(root, text='1B', variable=T1B).pack()
-    th4 = Checkbutton(root, text='1C', variable=T1C).pack()
-    th5 = Checkbutton(root, text='1D', variable=T1D).pack()
-    th6 = Checkbutton(root, text='1E', variable=T1E).pack()
-    th7 = Checkbutton(root, text='1F', variable=T1F).pack()
-    th8 = Checkbutton(root, text='DAC', variable=TDAC).pack()
+frame_zona = LabelFrame(root, text='ZONA', padx=17, pady=10)
+frame_zona.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 
-label1 = Label(root, text='SERVICIO').pack()
-s1 = Checkbutton(root, text = 'Hogar', variable= HOGAR, command=tarifas_hogar).pack()
-s2 = Checkbutton(root, text = 'Negocio', variable= NEGOCIO).pack()
-s3 = Checkbutton(root, text = 'Industria', variable= INDUSTRIA).pack()
+servicios = [
+    'HOGAR',
+    'NEGOCIO',
+    'INDUSTRIA',
+    'TODOS'
+]
 
-a1 = Checkbutton(root, text='2022', variable=aa1).pack()
-a2 = Checkbutton(root, text='2021', variable=aa2).pack()
-a3 = Checkbutton(root, text='2020', variable=aa3).pack()
-a4 = Checkbutton(root, text='2019', variable=aa4).pack()
+years = [
+    '2022',
+    '2021',
+    '2020',
+    '2019',
+    'TODOS'
+]
 
-m1 = Checkbutton(root, text='Enero', variable=enero).pack()
-m2 = Checkbutton(root, text='Febrero', variable=febrero).pack()
-m3 = Checkbutton(root, text='Marzo', variable=marzo).pack()
-m4 = Checkbutton(root, text='Abril', variable=abril).pack()
-m5 = Checkbutton(root, text='Mayo', variable=mayo).pack()
-m6 = Checkbutton(root, text='Junio', variable=junio).pack()
-m7 = Checkbutton(root, text='Julio', variable=julio).pack()
-m8 = Checkbutton(root, text='Agosto', variable=agosto).pack()
-m9 = Checkbutton(root, text='Septiembre', variable=septiembre).pack()
-m10 = Checkbutton(root, text='Octubre', variable=octubre).pack()
-m11 = Checkbutton(root, text='Noviembre', variable=noviembre).pack()
-m12 = Checkbutton(root, text='Diciembre', variable=diciembre).pack()
+meses = [
+    'ENERO',
+    'FEBRERO',
+    'MARZO',
+    'ABRIL',
+    'MAYO',
+    'JUNIO',
+    'JULIO',
+    'AGOSTO',
+    'SEPTIEMBRE',
+    'OCTUBRE',
+    'NOVIEMBRE',
+    'DICIEMBRE',
+    'TODOS'
+]
+
+tarifas_hogar = [
+    '1',
+    '1A',
+    '1B',
+    '1C',
+    '1D',
+    '1E',
+    '1F',
+    'DAC',
+    'TODAS'
+]
+
+tarifas_negocio = [
+    'PDBT',
+    'GDBT',
+    'GDMTO',
+    'GDMTH',
+    'TODAS'
+]
+
+estados = [
+    'AGUASCALIENTES',
+    'BAJA CALIFORNIA',
+    'BAJA CALIFORNIA SUR',
+    'CAMPECHE',
+    'CHIAPAS',
+    'CHIHUAHUA',
+    'CIUDAD DE MÉXICO',
+    'COAHUILA',
+    'COLIMA',
+    'DURANGO',
+    'ESTADO DE MÉXICO',
+    'GUANAJUATO',
+    'GUERRERO',
+    'HIDALGO',
+    'JALISCO',
+    'MICHOACÁN',
+    'MORELOS',
+    'NAYARIT',
+    'NUEVO LEÓN',
+    'OAXACA',
+    'PUEBLA',
+    'QUERÉTARO',
+    'QUINTANA ROO',
+    'SAN LUIS POTOSÍ',
+    'SINALOA',
+    'SONORA',
+    'TABASCO',
+    'TAMAULIPAS',
+    'TLAXCALA',
+    'VERACRUZ',
+    'YUCATÁN',
+    'ZACATECAS'
+]
 
 
+def pick_tarifa(e):
+    if S_servicio.get() == 'HOGAR':
+        S_tarifa.config(values=tarifas_hogar)
+    elif S_servicio.get() == 'NEGOCIO':
+        S_tarifa.config(values=tarifas_negocio)
+
+        drop_estado = ttk.Combobox(frame_zona, values=estados)
+        drop_estado.current(0)
+        drop_estado.pack()
+
+        mun = Entry(frame_zona, width=30)
+        mun.insert(0, 'Municipio')
+        mun.pack()
+
+        div = Entry(frame_zona, width=30)
+        div.insert(0, 'Division')
+        div.pack()
+        return drop_estado, mun, div
+
+
+def submit():
+    S_servicio.get()
+    S_anio.get()
+    S_mes.get()
+    S_tarifa.get()
+
+    #drop_estado.get()
+    #mun.get()
+    #div.get()
+
+
+S_servicio = ttk.Combobox(frame_Serv, values=servicios)
+S_servicio.current(0)
+S_servicio.pack()
+S_servicio.bind('<<ComboboxSelected>>', pick_tarifa)
+
+S_anio = ttk.Combobox(frame_Year, values=years)
+S_anio.current(0)
+S_anio.pack()
+
+S_mes = ttk.Combobox(frame_Month, values=meses)
+S_mes.current(0)
+S_mes.pack()
+
+S_tarifa = ttk.Combobox(frame_tarifas, values=[' '])
+S_tarifa.current(0)
+S_tarifa.pack()
+
+subbut = Button(root, text='Submit', padx=50, command=submit).grid(row=3, column=0, columnspan=2, pady=15)
 
 
 root.mainloop()

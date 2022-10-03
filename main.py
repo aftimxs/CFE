@@ -10,6 +10,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import const
 import NEGOCIO
 import HOGAR
+
 import csv
 import time
 import wx
@@ -27,18 +28,18 @@ def CFE():
     driver = webdriver.Chrome(PATH)
     actions = ActionChains(driver)
 
-    S_servicio = input('Servicio: ').upper()
-    S_tarifa = input('Tarifa: ').upper()
-    S_anio = input('Año: ').upper()
-    S_mes = input('Mes: ').upper()
-
-    if S_servicio == 'NEGOCIO':
-        S_estado = input('Estado: ').upper()
-        S_municipio = input('Municipio: ').upper()
-        S_div = input('Division: ').upper()
-
-    else:
-        pass
+    #S_servicio = input('Servicio: ').upper()
+    #S_tarifa = input('Tarifa: ').upper()
+    #S_anio = input('Año: ').upper()
+    #S_mes = input('Mes: ').upper()
+#
+    #if S_servicio == 'NEGOCIO':
+    #    S_estado = input('Estado: ').upper()
+    #    S_municipio = input('Municipio: ').upper()
+    #    S_div = input('Division: ').upper()
+#
+    #else:
+    #    pass
 
     if S_mes == 'TODOS':
         pass
