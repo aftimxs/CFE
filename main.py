@@ -21,7 +21,7 @@ import wx
 #    def __init__(self, parent):
 #        x.Mywin.__init__(self, parent)
 
-def CFE():
+def CFE(S_servicio, S_anio, S_mes, S_tarifa):
     # Accesar al driver y actions
     PATH = "C:\Program Files (x86)\chromedriver.exe"
     #/Users/aftimxs/Downloads/chromedriver
@@ -47,12 +47,11 @@ def CFE():
         S_mes = str(const.D_meses[S_mes])
 
     if S_servicio == 'HOGAR':
-        HOGAR.HOGAR(driver, actions, S_servicio, S_tarifa, S_anio, S_mes)
+        HOGAR.HOGAR(driver, actions, S_tarifa, S_anio, S_mes)
     else:
-        NEGOCIO.NEGOCIO(driver, actions, S_tarifa, S_anio, S_mes, S_estado, S_municipio, S_div)
+        NEGOCIO.NEGOCIO(driver, actions, S_tarifa, S_anio, S_mes)
+#, S_estado, S_municipio, S_div
 
-
-CFE()
 
 #app = wx.App(False)
 #frame = UI(None)

@@ -109,10 +109,10 @@ estados = [
 
 
 def pick_tarifa(e):
-    if S_servicio.get() == 'HOGAR':
-        S_tarifa.config(values=tarifas_hogar)
-    elif S_servicio.get() == 'NEGOCIO':
-        S_tarifa.config(values=tarifas_negocio)
+    if drop_s.get() == 'HOGAR':
+        drop_t.config(values=tarifas_hogar)
+    elif drop_s.get() == 'NEGOCIO':
+        drop_t.config(values=tarifas_negocio)
 
         drop_estado = ttk.Combobox(frame_zona, values=estados)
         drop_estado.current(0)
@@ -124,39 +124,42 @@ def pick_tarifa(e):
 
         div = Entry(frame_zona, width=30)
         div.insert(0, 'Division')
+        div.insert(0, 'Division')
         div.pack()
         return drop_estado, mun, div
 
 
 def submit():
-    S_servicio.get()
-    S_anio.get()
-    S_mes.get()
-    S_tarifa.get()
+    S_servicio = drop_s.get()
+    S_anio = drop_a.get()
+    S_mes = drop_m.get()
+    S_tarifa = drop_t.get()
+    #if S_servicio == 'NEGOCIO':
+    #    drop_estado.get()
+    #    mun.get()
+    #    div.get()
+    main.CFE(S_servicio, S_anio, S_mes, S_tarifa)
 
-    #drop_estado.get()
-    #mun.get()
-    #div.get()
 
+drop_s = ttk.Combobox(frame_Serv, values=servicios)
+drop_s.current(0)
+drop_s.pack()
+drop_s.bind('<<ComboboxSelected>>', pick_tarifa)
 
-S_servicio = ttk.Combobox(frame_Serv, values=servicios)
-S_servicio.current(0)
-S_servicio.pack()
-S_servicio.bind('<<ComboboxSelected>>', pick_tarifa)
+drop_a = ttk.Combobox(frame_Year, values=years)
+drop_a.current(0)
+drop_a.pack()
 
-S_anio = ttk.Combobox(frame_Year, values=years)
-S_anio.current(0)
-S_anio.pack()
+drop_m = ttk.Combobox(frame_Month, values=meses)
+drop_m.current(0)
+drop_m.pack()
 
-S_mes = ttk.Combobox(frame_Month, values=meses)
-S_mes.current(0)
-S_mes.pack()
+drop_t = ttk.Combobox(frame_tarifas, values=[' '])
+drop_t.current(0)
+drop_t.pack()
 
-S_tarifa = ttk.Combobox(frame_tarifas, values=[' '])
-S_tarifa.current(0)
-S_tarifa.pack()
-
-subbut = Button(root, text='Submit', padx=50, command=submit).grid(row=3, column=0, columnspan=2, pady=15)
+subbut = Button(root, text='Submit', padx=50, command=submit)
+subbut.grid(row=3, column=0, columnspan=2, pady=15)
 
 
 root.mainloop()

@@ -15,7 +15,7 @@ import wx
 #import x
 
 
-def HOGAR(driver, actions, S_servicio, S_tarifa, S_anio, S_mes):
+def HOGAR(driver, actions, S_tarifa, S_anio, S_mes):
     driver.get('https://app.cfe.mx/Aplicaciones/CCFE/Tarifas/TarifasCRECasa/Casa.aspx')
 
     conn = sqlite3.connect('HOGAR.db')
@@ -35,7 +35,7 @@ def HOGAR(driver, actions, S_servicio, S_tarifa, S_anio, S_mes):
                 actions.move_to_element(opciones_tarifas[index]).perform()
                 opciones_tarifas[index].click()
 
-                cuales_anios(driver, templist, templist2, S_servicio, S_anio, S_mes, cur, conn)
+                cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn)
                 driver.get('https://app.cfe.mx/Aplicaciones/CCFE/Tarifas/TarifasCRECasa/Casa.aspx')
                 WebDriverWait(driver, 20).until(
                     EC.visibility_of_element_located((By.XPATH, "//div[@class='col-xs-12']/p/a")))
@@ -48,7 +48,7 @@ def HOGAR(driver, actions, S_servicio, S_tarifa, S_anio, S_mes):
             actions.move_to_element(opciones_tarifas).perform()
             opciones_tarifas.click()
 
-            cuales_anios(driver, templist, templist2, S_servicio, S_anio, S_mes, cur, conn)
+            cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn)
             driver.get('https://app.cfe.mx/Aplicaciones/CCFE/Tarifas/TarifasCRECasa/Casa.aspx')
             WebDriverWait(driver, 20).until(
                 EC.visibility_of_element_located((By.XPATH, "//div[@class='col-xs-12']/p/a")))
@@ -57,7 +57,7 @@ def HOGAR(driver, actions, S_servicio, S_tarifa, S_anio, S_mes):
         conn.close()
 
 
-def cuales_anios(driver, templist, templist2, S_servicio, S_anio, S_mes, cur, conn):
+def cuales_anios(driver, templist, templist2, S_anio, S_mes, cur, conn):
     titulo = 'tituloSubseccion'
 
     #Obtener nombre de la tarifa y minimo mensual de consumo
@@ -156,6 +156,7 @@ def loop_meses(driver, nombre_tarifa, a, mdv, mm, templist, id_mes, templist2, m
 
 
 def consumos(table, nombre_tarifa, a, mdv, m, mm, templist, cur, conn):
+    nombre_tarifa = nombre_tarifa.replace('Tarifa', '')
     #Obtener las secciones que tienen los consumos
     rangos = table.find_elements(By.TAG_NAME, 'tr')
 
@@ -194,6 +195,7 @@ def consumos(table, nombre_tarifa, a, mdv, m, mm, templist, cur, conn):
 
 
 def tarifa_DAC(driver, table, nombre_tarifa, a, m, mm, templist2, cur, conn):
+    nombre_tarifa = nombre_tarifa.replace('Tarifa', '')
     #Obtener las secciones que tienen los consumos
     rangos = table.find_elements(By.TAG_NAME, 'tr')
 
