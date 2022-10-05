@@ -12,16 +12,9 @@ import sqlite3
 import const
 import csv
 import time
-import wx
-#import x
 
 
 def NEGOCIO(driver, actions, S_tarifa, S_anio, S_mes, S_estado, S_municipio, S_div):
-    if S_mes == 'TODOS':
-        pass
-    else:
-        S_mes = str(const.D_meses[S_mes])
-
     driver.get('https://app.cfe.mx/Aplicaciones/CCFE/Tarifas/TarifasCRENegocio/Negocio.aspx')
 
     conn = sqlite3.connect('NEGOCIO.db')
@@ -66,7 +59,6 @@ def cuales_anios(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municip
 
     #Obtener nombre de la tarifa y minimo mensual de consumo
     nombre_tarifa = driver.find_element(By.CLASS_NAME, titulo).text.replace('Tarifa', '')
-    mm = 25
 
     #Opciones de años
     select_year = Select(driver.find_element(By.ID, 'ContentPlaceHolder1_Fecha_ddAnio'))
@@ -92,7 +84,6 @@ def cuales_anios(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municip
         select_year = Select(driver.find_element(By.ID, 'ContentPlaceHolder1_Fecha_ddAnio'))
         a = select_year.first_selected_option.text
         Estado(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa)
-
 
 
 def Estado(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_div, a, nombre_tarifa):
@@ -226,7 +217,6 @@ def tabla(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_d
         }
         data = [nombre_tarifa, e, mun, d, a, m, tl[0], tl[1], tl[2]]
         #Mandar la entrada a una lista externa
-        print(Table_dict)
         templist.append(Table_dict)
         cur.executemany("INSERT INTO TNG VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", [data])
         conn.commit()
