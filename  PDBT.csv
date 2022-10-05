@@ -1,0 +1,3 @@
+,Tarifa,Estado,Municipio,Division,Anio,Mes,Cargo,Unidades,Costo
+0, PDBT,BAJA CALIFORNIA,TIJUANA,BAJA CALIFORNIA,2022,ENERO,Fijo,$/mes,53.58
+1, PDBT,BAJA CALIFORNIA,TIJUANA,BAJA CALIFORNIA,2022,ENERO,Variable(Energía),$/kWh,2.388

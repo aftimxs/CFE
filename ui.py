@@ -4,7 +4,7 @@ import main
 
 root = Tk()
 root.title("Base de datos CFE")
-#root.geometry('200x400')
+
 
 frame_Serv = LabelFrame(root, text='SERVICIO', padx=15, pady=10)
 frame_Serv.grid(row=0, column=0, padx=10, pady=10)
@@ -114,19 +114,14 @@ def pick_tarifa(e):
     elif drop_s.get() == 'NEGOCIO':
         drop_t.config(values=tarifas_negocio)
 
-        drop_estado = ttk.Combobox(frame_zona, values=estados)
-        drop_estado.current(0)
+
+def pick_zona(e):
+    if drop_s.get() == 'NEGOCIO':
         drop_estado.pack()
-
-        mun = Entry(frame_zona, width=30)
-        mun.insert(0, 'Municipio')
         mun.pack()
-
-        div = Entry(frame_zona, width=30)
-        div.insert(0, 'Division')
-        div.insert(0, 'Division')
         div.pack()
-        return drop_estado, mun, div
+    else:
+        pass
 
 
 def submit():
@@ -134,11 +129,12 @@ def submit():
     S_anio = drop_a.get()
     S_mes = drop_m.get()
     S_tarifa = drop_t.get()
-    #if S_servicio == 'NEGOCIO':
-    #    drop_estado.get()
-    #    mun.get()
-    #    div.get()
-    main.CFE(S_servicio, S_anio, S_mes, S_tarifa)
+
+    S_estado = drop_estado.get()
+    S_municipio = mun.get().upper()
+    S_div = div.get().upper()
+
+    main.CFE(S_servicio, S_anio, S_mes, S_tarifa, S_estado, S_municipio, S_div)
 
 
 drop_s = ttk.Combobox(frame_Serv, values=servicios)
@@ -157,6 +153,17 @@ drop_m.pack()
 drop_t = ttk.Combobox(frame_tarifas, values=[' '])
 drop_t.current(0)
 drop_t.pack()
+drop_t.bind('<<ComboboxSelected>>', pick_zona)
+
+drop_estado = ttk.Combobox(frame_zona, values=estados)
+drop_estado.current(0)
+
+mun = Entry(frame_zona, width=30)
+mun.insert(0, 'Municipio')
+
+div = Entry(frame_zona, width=30)
+div.insert(0, 'Division')
+
 
 subbut = Button(root, text='Submit', padx=50, command=submit)
 subbut.grid(row=3, column=0, columnspan=2, pady=15)

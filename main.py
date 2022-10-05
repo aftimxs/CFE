@@ -14,32 +14,14 @@ import HOGAR
 import csv
 import time
 import wx
-#import x
 
 
-#class UI(x.Mywin):
-#    def __init__(self, parent):
-#        x.Mywin.__init__(self, parent)
-
-def CFE(S_servicio, S_anio, S_mes, S_tarifa):
+def CFE(S_servicio, S_anio, S_mes, S_tarifa, S_estado, S_municipio, S_div):
     # Accesar al driver y actions
-    PATH = "C:\Program Files (x86)\chromedriver.exe"
-    #/Users/aftimxs/Downloads/chromedriver
+    PATH = "/Users/aftimxs/Downloads/chromedriver"
+    #C:\Program Files (x86)\chromedriver.exe
     driver = webdriver.Chrome(PATH)
     actions = ActionChains(driver)
-
-    #S_servicio = input('Servicio: ').upper()
-    #S_tarifa = input('Tarifa: ').upper()
-    #S_anio = input('Año: ').upper()
-    #S_mes = input('Mes: ').upper()
-#
-    #if S_servicio == 'NEGOCIO':
-    #    S_estado = input('Estado: ').upper()
-    #    S_municipio = input('Municipio: ').upper()
-    #    S_div = input('Division: ').upper()
-#
-    #else:
-    #    pass
 
     if S_mes == 'TODOS':
         pass
@@ -49,12 +31,5 @@ def CFE(S_servicio, S_anio, S_mes, S_tarifa):
     if S_servicio == 'HOGAR':
         HOGAR.HOGAR(driver, actions, S_tarifa, S_anio, S_mes)
     else:
-        NEGOCIO.NEGOCIO(driver, actions, S_tarifa, S_anio, S_mes)
-#, S_estado, S_municipio, S_div
+        NEGOCIO.NEGOCIO(driver, actions, S_tarifa, S_anio, S_mes, S_estado, S_municipio, S_div)
 
-
-#app = wx.App(False)
-#frame = UI(None)
-#frame.Show(True)
-##start the applications
-#app.MainLoop()

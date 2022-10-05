@@ -1,0 +1,4 @@
+,Tarifa,Anio,Verano,Mes,Consumo,Precio,kwh,Minimo
+0, 1,2022,,ENERO,Consumobasico,0.882,75,25
+1, 1,2022,,ENERO,Consumointermedio,1.073,65,25
+2, 1,2022,,ENERO,Consumoexcedente,3.134,,25

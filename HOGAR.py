@@ -20,8 +20,8 @@ def HOGAR(driver, actions, S_tarifa, S_anio, S_mes):
 
     conn = sqlite3.connect('HOGAR.db')
     cur = conn.cursor()
-    #cur.execute("CREATE TABLE THN(tarifa, anio, verano, mes, consumo, precio, kwh, minimo)")
-    #cur.execute("CREATE TABLE THD(tarifa, anio, mes, region, cargo_fijo, verano, invierno, minimo)")
+    cur.execute("CREATE TABLE THN(tarifa, anio, verano, mes, consumo, precio, kwh, minimo)")
+    cur.execute("CREATE TABLE THD(tarifa, anio, mes, region, cargo_fijo, verano, invierno, minimo)")
 
     opciones_tarifas = driver.find_elements(By.XPATH, "//div[@class='col-xs-12']/p/a")
 
