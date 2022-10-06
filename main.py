@@ -18,8 +18,9 @@ import wx
 
 def CFE(S_servicio, S_anio, S_mes, S_tarifa, S_estado, S_municipio, S_div):
     # Accesar al driver y actions
-    PATH = "/Users/aftimxs/Downloads/chromedriver"
-    #C:\Program Files (x86)\chromedriver.exe
+    PATH = "C:\Program Files (x86)\chromedriver.exe"
+    #
+    #/Users/aftimxs/Downloads/chromedriver
     driver = webdriver.Chrome(PATH)
     actions = ActionChains(driver)
 

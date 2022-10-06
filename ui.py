@@ -104,7 +104,8 @@ estados = [
     'TLAXCALA',
     'VERACRUZ',
     'YUCATÁN',
-    'ZACATECAS'
+    'ZACATECAS',
+    'TODOS'
 ]
 
 

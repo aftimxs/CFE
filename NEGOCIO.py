@@ -95,7 +95,7 @@ def Estado(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, S_
         for i in range(1, len(select_estado.options)):
             # Seleccionar estado
             select_estado = Select(driver.find_element(By.ID, id_estado))
-            select_estado.select_by_value(f'{i}')
+            select_estado.select_by_index(i)
 
             # Obtener nombre del mes
             select_estado = Select(driver.find_element(By.ID, id_estado))
@@ -121,7 +121,7 @@ def Municipio(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio,
         for i in range(1, len(select_municipio.options)):
             # Seleccionar estado
             select_municipio = Select(driver.find_element(By.ID, id_municipio))
-            select_municipio.select_by_value(f'{i}')
+            select_municipio.select_by_index(i)
 
             # Obtener nombre del mes
             select_municipio = Select(driver.find_element(By.ID, id_municipio))
@@ -146,7 +146,7 @@ def Division(driver, templist, S_anio, S_mes, cur, conn, S_estado, S_municipio, 
         for i in range(1, len(select_div.options)):
             # Seleccionar estado
             select_div = Select(driver.find_element(By.ID, id_div))
-            select_div.select_by_value(f'{i}')
+            select_div.select_by_index(i)
 
             # Obtener nombre del mes
             select_div = Select(driver.find_element(By.ID, id_div))
